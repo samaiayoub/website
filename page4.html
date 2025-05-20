@@ -17,7 +17,7 @@
     }
     #pixie {
       position: absolute;
-      bottom: 40%;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 320px;
@@ -30,16 +30,39 @@
       bottom: 0;
       width: 100%;
       background-color: rgba(255 255 255 / 0.85);
-      padding: 20px;
+      padding: 15px 20px;
       font-size: 18px;
       box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
       z-index: 50;
       user-select: none;
-      min-height: 120px;
+      min-height: 90px; /* shorter height */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
     #text {
       white-space: pre-wrap;
-      min-height: 80px;
+      min-height: 60px;
+      text-align: center;
+      width: 90%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    #nextBtn {
+      font-size: 16px;
+      padding: 8px 24px;
+      border-radius: 8px;
+      border: none;
+      background-color: #ff8ecb;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      align-self: center;
+    }
+    #nextBtn:hover {
+      background-color: #ff6cb6;
     }
     #proposalContainer {
       display: none;
@@ -60,7 +83,7 @@
       color: #d6336c;
       text-shadow: 0 0 8px #f99;
     }
-    button {
+    button.proposalBtn {
       font-size: 1.2rem;
       padding: 14px 36px;
       margin: 0 15px;
@@ -92,12 +115,13 @@
 
   <div id="textbox">
     <div id="text"></div>
+    <button id="nextBtn">Next</button>
   </div>
 
   <div id="proposalContainer">
     <div id="proposalText">Should Piper be Ethan's GF?</div>
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
+    <button id="yesBtn" class="proposalBtn">Yes</button>
+    <button id="noBtn" class="proposalBtn">No</button>
   </div>
 
 <script>
@@ -118,6 +142,7 @@
   const proposalContainer = document.getElementById('proposalContainer');
   const yesBtn = document.getElementById('yesBtn');
   const noBtn = document.getElementById('noBtn');
+  const nextBtn = document.getElementById('nextBtn');
   const textbox = document.getElementById('textbox');
 
   let currentLine = 0;
@@ -131,12 +156,12 @@
       i++;
       if (i >= text.length) {
         clearInterval(typingInterval);
-        setTimeout(callback, 1000);
+        if(callback) callback();
       }
     }, 40);
   }
 
-  function nextLine() {
+  function showLine() {
     if (currentLine === 3) {
       // Background to madtext.png
       document.body.style.background = "url('madtext.png') no-repeat center center fixed";
@@ -153,11 +178,19 @@
       proposalContainer.style.display = 'block';
       return;
     }
-    typeText(lines[currentLine], () => {
-      currentLine++;
-      nextLine();
-    });
+    typeText(lines[currentLine]);
   }
+
+  nextBtn.addEventListener('click', () => {
+    // If still typing, finish typing instantly
+    if (textElem.textContent !== lines[currentLine]) {
+      clearInterval(typingInterval);
+      textElem.textContent = lines[currentLine];
+      return;
+    }
+    currentLine++;
+    showLine();
+  });
 
   // Yes button click -> all white + "I love you"
   yesBtn.addEventListener('click', () => {
@@ -176,7 +209,6 @@
   noBtn.addEventListener('mouseenter', () => {
     const containerRect = proposalContainer.getBoundingClientRect();
     const noBtnRect = noBtn.getBoundingClientRect();
-    // Move No button randomly inside proposal container width limits
     const maxX = containerRect.width - noBtnRect.width;
     const maxY = containerRect.height - noBtnRect.height;
     const randX = Math.random() * maxX;
@@ -186,7 +218,7 @@
     noBtn.style.top = randY + 'px';
   });
 
-  nextLine();
+  showLine();
 </script>
 
 </body>
