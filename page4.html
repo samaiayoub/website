@@ -2,112 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Page 4 - The Proposal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposal</title>
   <style>
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: url('text.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Arial', sans-serif;
       overflow: hidden;
-      position: relative;
-      height: 100vh;
-      color: #222;
     }
+
     #pixie {
       position: absolute;
-      bottom: 0;
+      bottom: 0px;
       right: 40px;
       width: 320px;
       z-index: 100;
-      transition: all 1s ease-in-out;
-      user-select: none;
     }
+
     #textbox {
       position: fixed;
       bottom: 0;
       width: 100%;
-      background-color: rgba(255 255 255 / 0.85);
-      padding: 15px 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 15px;
       font-size: 18px;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
       z-index: 50;
-      user-select: none;
-      min-height: 90px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
     }
+
     #text {
       white-space: pre-wrap;
-      min-height: 60px;
-      text-align: center;
-      width: 90%;
-      max-width: 600px;
-      margin: 0 auto;
     }
-    #nextBtn {
+
+    #nextBtn, #yesBtn, #noBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
       font-size: 16px;
-      padding: 8px 24px;
-      border-radius: 8px;
+      cursor: pointer;
       border: none;
+      border-radius: 8px;
       background-color: #ff8ecb;
       color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
-      align-self: center;
+      transition: background-color 0.3s;
     }
-    #nextBtn:hover {
+
+    #nextBtn:hover, #yesBtn:hover, #noBtn:hover {
       background-color: #ff6cb6;
     }
+
     #proposalContainer {
       display: none;
       position: fixed;
-      bottom: 160px; /* above pixie */
-      right: 40px;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -30%);
       text-align: center;
-      z-index: 150;
-      width: 320px;
-      user-select: none;
+      z-index: 200;
     }
-    #proposalText {
+
+    #proposalContainer h1 {
       font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: #d6336c;
-      text-shadow: 0 0 8px #f99;
-    }
-    button.proposalBtn {
-      font-size: 1.2rem;
-      padding: 14px 36px;
-      margin: 0 15px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
-    #yesBtn {
-      background-color: #d6336c;
-      color: white;
-    }
-    #yesBtn:hover {
-      background-color: #b82e5b;
-    }
-    #noBtn {
-      background-color: #aaa;
-      color: #555;
-      position: relative;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-
-  <img id="pixie" src="cupidflying.png" alt="Cupid" />
+  <img id="pixie" src="cupidflying.png" alt="Pixie" />
 
   <div id="textbox">
     <div id="text"></div>
@@ -115,111 +78,111 @@
   </div>
 
   <div id="proposalContainer">
-    <div id="proposalText">Should Piper be Ethan's GF?</div>
-    <button id="yesBtn" class="proposalBtn">Yes</button>
-    <button id="noBtn" class="proposalBtn">No</button>
+    <h1>Should Piper be Ethan's GF?</h1>
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
   </div>
 
-<script>
-  const lines = [
-    "Pixie: But they would text daily, he loves her so much and she means a lot to him.",
-    "Pixie: They would text about different stuff, laugh in texts.",
-    "Pixie: And she ofc gets mad sometimes.",
-    // Change background to madtext.png here
-    "Pixie: And they would argue sometimes too on texts too.",
-    // Change background to white and pixie to judgingpixie.png
-    "Pixie: But well, now that I told u everything about them.",
-    "Pixie: He wants her to be his girlfriend.",
-    "Pixie: I'll leave that up to YOU!"
-  ];
+  <script>
+    const lines = [
+      'Pixie: but they would text daily, he loves her so much and she means a lot to him',
+      'Pixie: they would text about different stuff, laugh in texts',
+      'Pixie: and she ofc gets mad sometimes',
+      'Pixie: and they would argue sometimes too on texts too',
+      'Pixie: but well, now that i told u everything about them',
+      'Pixie: he wants her to be his girlfriend',
+      'Pixie: ill leave that up to YOU!'
+    ];
 
-  const textElem = document.getElementById('text');
-  const pixie = document.getElementById('pixie');
-  const proposalContainer = document.getElementById('proposalContainer');
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const textbox = document.getElementById('textbox');
+    let currentLine = 0;
+    const textBox = document.getElementById('text');
+    const nextBtn = document.getElementById('nextBtn');
+    const pixie = document.getElementById('pixie');
+    const proposalContainer = document.getElementById('proposalContainer');
 
-  let currentLine = 0;
-  let typingInterval;
+    function typeText(text, callback) {
+      let i = 0;
+      textBox.textContent = '';
+      const interval = setInterval(() => {
+        textBox.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          if (callback) callback();
+        }
+      }, 30);
+    }
 
-  function typeText(text, callback) {
-    let i = 0;
-    textElem.textContent = '';
-    typingInterval = setInterval(() => {
-      textElem.textContent += text.charAt(i);
-      i++;
-      if (i >= text.length) {
-        clearInterval(typingInterval);
-        if(callback) callback();
+    function showLine() {
+      const line = lines[currentLine];
+
+      if (currentLine === 2) {
+        document.body.style.background = "url('madtext.png') no-repeat center center fixed";
+        document.body.style.backgroundSize = 'cover';
+      } else if (currentLine === 4) {
+        document.body.style.background = 'white';
       }
-    }, 40);
-  }
 
-  function showLine() {
-    if (currentLine === 3) {
-      // Background to madtext.png
-      document.body.style.background = "url('madtext.png') no-repeat center center fixed";
-      document.body.style.backgroundSize = "cover";
-    }
-    if (currentLine === 4) {
-      // Background white and pixie changes to judgingpixie.png
-      document.body.style.background = "white";
-      pixie.src = "judgingpixie.png";
-      pixie.style.bottom = "0";
-      pixie.style.right = "40px";
-    }
-    if (currentLine >= lines.length) {
-      // Hide textbox, show proposal UI
-      textbox.style.display = 'none';
-      proposalContainer.style.display = 'block';
-      pixie.src = "nervouspixie.png"; // Change pixie for proposal
-      pixie.style.bottom = "0";
-      pixie.style.right = "40px";
-      return;
-    }
-    typeText(lines[currentLine]);
-  }
+      if (currentLine === 5) {
+        pixie.src = 'nervouspixie.png';
+      }
 
-  nextBtn.addEventListener('click', () => {
-    // If still typing, finish typing instantly
-    if (textElem.textContent !== lines[currentLine]) {
-      clearInterval(typingInterval);
-      textElem.textContent = lines[currentLine];
-      return;
+      if (currentLine < lines.length) {
+        typeText(line);
+      }
+
+      if (currentLine === lines.length - 1) {
+        nextBtn.style.display = 'none';
+        proposalContainer.style.display = 'block';
+      }
     }
-    currentLine++;
+
+    nextBtn.addEventListener('click', () => {
+      const currentText = lines[currentLine];
+      if (textBox.textContent !== currentText) {
+        textBox.textContent = currentText;
+        return;
+      }
+      currentLine++;
+      if (currentLine < lines.length) showLine();
+    });
+
+    document.getElementById('yesBtn').addEventListener('click', () => {
+      proposalContainer.style.display = 'none';
+      pixie.style.display = 'none';
+      document.getElementById('textbox').style.display = 'none';
+      document.body.style.background = 'white';
+
+      const loveMsg = document.createElement('div');
+      loveMsg.textContent = 'I love you';
+      loveMsg.style.position = 'fixed';
+      loveMsg.style.top = '50%';
+      loveMsg.style.left = '50%';
+      loveMsg.style.transform = 'translate(-50%, -50%)';
+      loveMsg.style.fontSize = '3rem';
+      loveMsg.style.fontWeight = 'bold';
+      loveMsg.style.color = '#d6336c';
+      loveMsg.style.textShadow = '0 0 8px #faa';
+      document.body.appendChild(loveMsg);
+
+      const note = document.createElement('div');
+      note.textContent = '(sorry the end was so cheap I GOT TIRED, also i didn’t add “back” buttons cuz.. I was tired and also I love you)';
+      note.style.position = 'fixed';
+      note.style.bottom = '10px';
+      note.style.width = '100%';
+      note.style.textAlign = 'center';
+      note.style.fontSize = '13px';
+      note.style.color = '#888';
+      document.body.appendChild(note);
+    });
+
+    document.getElementById('noBtn').addEventListener('click', (e) => {
+      e.target.style.position = 'absolute';
+      e.target.style.top = `${Math.random() * 80 + 10}%`;
+      e.target.style.left = `${Math.random() * 80 + 10}%`;
+    });
+
     showLine();
-  });
-
-  // Yes button click -> all white + "I love you"
-  yesBtn.addEventListener('click', () => {
-    proposalContainer.style.display = 'none';
-    pixie.style.display = 'none';
-    textbox.style.display = 'block';
-    textbox.style.backgroundColor = 'white';
-    textElem.style.fontSize = '3rem';
-    textElem.style.textAlign = 'center';
-    textElem.style.color = '#d6336c';
-    textElem.textContent = 'I love you';
-    document.body.style.background = 'white';
-  });
-
-  // No button moves away on hover, does nothing on click
-  noBtn.addEventListener('mouseenter', () => {
-    const containerRect = proposalContainer.getBoundingClientRect();
-    const noBtnRect = noBtn.getBoundingClientRect();
-    const maxX = containerRect.width - noBtnRect.width;
-    const maxY = containerRect.height - noBtnRect.height;
-    const randX = Math.random() * maxX;
-    const randY = Math.random() * maxY;
-    noBtn.style.position = 'absolute';
-    noBtn.style.left = randX + 'px';
-    noBtn.style.top = randY + 'px';
-  });
-
-</script>
-
+  </script>
 </body>
 </html>
