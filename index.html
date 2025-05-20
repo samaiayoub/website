@@ -10,15 +10,22 @@
       padding: 0;
       font-family: 'Arial', sans-serif;
       background: linear-gradient(to bottom right, #ffe6f0, #e0ffe6);
-      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    #step1, #step2, #step3, #step4 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
       text-align: center;
     }
-    #step2, #step3, #step4 {
-      display: none;
+    #step1 {
+      display: flex;
     }
     button {
       padding: 12px 20px;
@@ -28,14 +35,27 @@
       border-radius: 8px;
       cursor: pointer;
       transition: background 0.3s;
+      z-index: 2;
     }
     button:hover {
       background-color: #ffa6b1;
     }
-    img {
+    .cupid-container {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cupid-container img {
       max-width: 300px;
-      margin: 20px 0;
+      margin: 0;
       cursor: pointer;
+    }
+    .cupid-container p,
+    .cupid-container button {
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -52,30 +72,34 @@
   </div>
 
   <div id="step3">
-    <img src="cupid.png" alt="Cupid">
-    <p><strong>No no... I wanna show you something better.</strong></p>
-    <button onclick="showStep4()">What?</button>
+    <div class="cupid-container">
+      <p><strong>No no... I wanna show you something better.</strong></p>
+      <button onclick="showStep4()">What?</button>
+      <img src="cupid.png" alt="Cupid">
+    </div>
   </div>
 
   <div id="step4">
-    <a href="page1.html">
-      <img src="cupid2.png" alt="Cupid Hand">
-    </a>
-    <p><strong>Come with me. Grab my hand.</strong></p>
+    <div class="cupid-container">
+      <p><strong>Come with me. Grab my hand.</strong></p>
+      <a href="page1.html">
+        <img src="cupid2.png" alt="Cupid Hand">
+      </a>
+    </div>
   </div>
 
   <script>
     function showStep2() {
       document.getElementById('step1').style.display = 'none';
-      document.getElementById('step2').style.display = 'block';
+      document.getElementById('step2').style.display = 'flex';
     }
     function showStep3() {
       document.getElementById('step2').style.display = 'none';
-      document.getElementById('step3').style.display = 'block';
+      document.getElementById('step3').style.display = 'flex';
     }
     function showStep4() {
       document.getElementById('step3').style.display = 'none';
-      document.getElementById('step4').style.display = 'block';
+      document.getElementById('step4').style.display = 'flex';
     }
   </script>
 </body>
