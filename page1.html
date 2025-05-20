@@ -18,16 +18,18 @@
       position: absolute;
       bottom: -100px;
       right: -100px;
-      width: 100px;
+      width: 180px;
+      z-index: 10;
       transition: all 3s ease-in-out;
     }
 
     #ethan {
       position: absolute;
-      bottom: 130px;
+      bottom: 120px;
       left: 30px;
-      height: 200px;
+      height: 300px;
       display: none;
+      z-index: 5;
     }
 
     #textbox {
@@ -38,6 +40,7 @@
       padding: 20px;
       font-size: 18px;
       box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1;
     }
 
     #text {
@@ -49,6 +52,15 @@
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #ff8ecb;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    #nextBtn:hover, #followBtn:hover {
+      background-color: #ff6cb6;
     }
 
     #followBtn {
@@ -102,8 +114,8 @@
       typeText(fullText);
 
       if (currentLine === 0) {
-        pixie.style.bottom = '20px';
-        pixie.style.right = '20px';
+        pixie.style.bottom = '150px';
+        pixie.style.right = '30px';
       }
 
       if (currentLine === lines.length - 1) {
@@ -114,7 +126,6 @@
 
     nextBtn.addEventListener('click', () => {
       if (textBox.textContent !== `${lines[currentLine].speaker}: ${lines[currentLine].text}`) {
-        // Skip animation and show full text instantly
         textBox.textContent = `${lines[currentLine].speaker}: ${lines[currentLine].text}`;
         return;
       }
@@ -122,7 +133,6 @@
       if (currentLine < lines.length) showLine();
     });
 
-    // Start the scene
     showLine();
   </script>
 </body>
