@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethan's Room</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('ethansroom.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    #pixie {
+      position: absolute;
+      bottom: -100px;
+      right: -100px;
+      width: 100px;
+      transition: all 3s ease-in-out;
+    }
+
+    #ethan {
+      position: absolute;
+      bottom: 130px;
+      left: 30px;
+      height: 200px;
+      display: none;
+    }
+
+    #textbox {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      font-size: 18px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #text {
+      white-space: pre-wrap;
+    }
+
+    #nextBtn, #followBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #followBtn {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <img id="pixie" src="cupidflying.png" alt="Pixie" />
+  <img id="ethan" src="ethansayinghi.png" alt="Ethan" />
+
+  <div id="textbox">
+    <div id="text"></div>
+    <button id="nextBtn">Next</button>
+    <button id="followBtn" onclick="window.location.href='page2.html'">Follow Pixie →</button>
+  </div>
+
+  <script>
+    const lines = [
+      { speaker: 'Pixie', text: 'uhm so ill tell u a story, its about two people, one of them is-' },
+      { speaker: 'Ethan', text: 'HII', showEthan: true },
+      { speaker: 'Pixie', text: 'oh there he is, thats ethan, hes from france, he likes maths i guess, and he lives with his family' },
+      { speaker: 'Ethan', text: 'yea...' },
+      { speaker: 'Pixie', text: 'come with me ill show u the other person' }
+    ];
+
+    let currentLine = 0;
+    const textBox = document.getElementById('text');
+    const nextBtn = document.getElementById('nextBtn');
+    const followBtn = document.getElementById('followBtn');
+    const pixie = document.getElementById('pixie');
+    const ethan = document.getElementById('ethan');
+
+    function typeText(text, callback) {
+      let i = 0;
+      textBox.textContent = '';
+      const interval = setInterval(() => {
+        textBox.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          if (callback) callback();
+        }
+      }, 30);
+    }
+
+    function showLine() {
+      const line = lines[currentLine];
+      if (line.showEthan) ethan.style.display = 'block';
+      const fullText = `${line.speaker}: ${line.text}`;
+      typeText(fullText);
+
+      if (currentLine === 0) {
+        pixie.style.bottom = '20px';
+        pixie.style.right = '20px';
+      }
+
+      if (currentLine === lines.length - 1) {
+        nextBtn.style.display = 'none';
+        followBtn.style.display = 'inline-block';
+      }
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (textBox.textContent !== `${lines[currentLine].speaker}: ${lines[currentLine].text}`) {
+        // Skip animation and show full text instantly
+        textBox.textContent = `${lines[currentLine].speaker}: ${lines[currentLine].text}`;
+        return;
+      }
+      currentLine++;
+      if (currentLine < lines.length) showLine();
+    });
+
+    // Start the scene
+    showLine();
+  </script>
+</body>
+</html>
