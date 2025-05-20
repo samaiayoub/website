@@ -8,7 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: url('ethansroom2.png') no-repeat center center fixed;
+      background: url('ethansroom.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Arial', sans-serif;
       overflow: hidden;
@@ -16,7 +16,7 @@
 
     #pixie {
       position: absolute;
-      bottom: 120px;
+      bottom: 0px;
       right: 40px;
       width: 320px;
       z-index: 100;
@@ -27,7 +27,7 @@
       position: absolute;
       bottom: 110px;
       left: 0px;
-      height: 750px;
+      height: 600px;
       display: none;
       z-index: 10;
     }
@@ -114,7 +114,7 @@
       typeText(fullText);
 
       if (currentLine === 0) {
-        pixie.style.bottom = '120px';
+        pixie.style.bottom = '0px';
         pixie.style.right = '40px';
       }
 
