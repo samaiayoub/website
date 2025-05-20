@@ -3,34 +3,144 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I Love You</title>
+  <title>Love Story - Page 4</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('judgingpixie.png') center center / cover no-repeat;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      background-color: #ffe6f0;
+      background: url('text.png') center center / cover no-repeat;
+      overflow: hidden;
     }
 
-    #finalMessage {
+    #pixie {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 250px;
+      z-index: 10;
+      transition: all 0.5s ease;
+    }
+
+    #textbox {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      font-size: 20px;
+      text-align: center;
+      z-index: 20;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #text {
+      white-space: pre-wrap;
+    }
+
+    #nextBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff8ecb;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    #nextBtn:hover {
+      background-color: #ff6cb6;
+    }
+
+    #finalScreen {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: white;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    #finalScreen img {
+      width: 220px;
+    }
+
+    h1 {
+      font-size: 38px;
+      color: black;
+      font-weight: bold;
+    }
+
+    .choiceBtn {
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    #yesBtn {
+      background-color: #00c853;
+      color: white;
+    }
+
+    #yesBtn:hover {
+      background-color: #00b248;
+    }
+
+    #noBtn {
+      background-color: #d32f2f;
+      color: white;
+      position: relative;
+    }
+
+    #noBtn:hover {
+      transform: translateX(-150px) rotate(20deg);
+    }
+
+    #loveMessage {
+      display: none;
       font-size: 60px;
       font-weight: bold;
       color: #ff1493;
-      text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
       padding: 20px;
       border-radius: 20px;
       background-color: rgba(255, 255, 255, 0.7);
       max-width: 90%;
+      text-align: center;
+      z-index: 100;
     }
   </style>
 </head>
 <body>
-  <div id="finalMessage">YAYY U SAID YES, I LOVE YOU SO MUCH!</div>
-</body>
-</html>
+  <img id="pixie" src="cupidflying.png" alt="Cupid" />
+
+  <div id="textbox">
+    <div id="text"></div>
+    <button id="nextBtn">Next</button>
+  </div>
+
+  <div id="finalScreen">
+    <h1>Would Piper be his girlfriend?</h1>
+    <div style="display: flex; justify-content: center; gap: 50px;">
+      <button id="yesBtn" class="choiceBtn">YES SHE SHOULD</button>
+      <button id="noBtn" class="choiceBtn">NO</button>
+    </div>
+    <img src="judgingpixie.png" alt="Pixie" />
+  </div>
+
+  <div id="loveMessage">YAYY U SAID YES, I LOVE YOU SO MUCH!</div>
+
+  <script>
+    const textLines = [
+      { text: "Pixie: but he would still love her and text her everyday, no matter what", bg: "texting.png", pixie: "cupidf
