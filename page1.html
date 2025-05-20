@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hi Piper!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #ffe6f0, #e0ffe6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    #step2, #step3, #step4 {
+      display: none;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 18px;
+      background-color: #ffb6c1;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #ffa6b1;
+    }
+    img {
+      max-width: 300px;
+      margin: 20px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="step1">
+    <h1>Hi!</h1>
+    <button onclick="showStep2()">Hi!</button>
+  </div>
+
+  <div id="step2">
+    <h2>Will you be my girlfriend?</h2>
+    <button onclick="showStep3()">Yes 💖</button>
+    <button disabled>No 😢</button>
+  </div>
+
+  <div id="step3">
+    <img src="cupid.png" alt="Cupid">
+    <p><strong>No no... I wanna show you something better.</strong></p>
+    <button onclick="showStep4()">What?</button>
+  </div>
+
+  <div id="step4">
+    <a href="page1.html">
+      <img src="cupid2.png" alt="Cupid Hand">
+    </a>
+    <p><strong>Come with me. Grab my hand.</strong></p>
+  </div>
+
+  <script>
+    function showStep2() {
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+    }
+    function showStep3() {
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').style.display = 'block';
+    }
+    function showStep4() {
+      document.getElementById('step3').style.display = 'none';
+      document.getElementById('step4').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
