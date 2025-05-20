@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Story - Page 3</title>
+  <title>Ethan's Room</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: white;
+      background: url('ethansroom2.png') no-repeat center center fixed;
+      background-size: cover;
       font-family: 'Arial', sans-serif;
       overflow: hidden;
     }
 
     #pixie {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      bottom: 0px;
+      right: 40px;
       width: 320px;
       z-index: 100;
       transition: all 3s ease-in-out;
@@ -28,16 +28,7 @@
       bottom: 110px;
       left: 0px;
       height: 600px;
-      display: block;
-      z-index: 10;
-    }
-
-    #piper {
-      position: absolute;
-      bottom: 110px;
-      right: 0px;
-      height: 600px;
-      display: block;
+      display: none;
       z-index: 10;
     }
 
@@ -56,7 +47,7 @@
       white-space: pre-wrap;
     }
 
-    #nextBtn {
+    #nextBtn, #followBtn {
       margin-top: 10px;
       padding: 10px 20px;
       font-size: 16px;
@@ -68,45 +59,40 @@
       transition: background-color 0.3s;
     }
 
-    #nextBtn:hover {
+    #nextBtn:hover, #followBtn:hover {
       background-color: #ff6cb6;
     }
 
-    .love-bg {
-      animation: loveColor 5s infinite alternate;
-    }
-
-    @keyframes loveColor {
-      0% { background-color: #ffcce6; }
-      50% { background-color: #ffb3d9; }
-      100% { background-color: #ff99cc; }
+    #followBtn {
+      display: none;
     }
   </style>
 </head>
 <body>
   <img id="ethan" src="ethansayinghi.png" alt="Ethan" />
-  <img id="piper" src="pipersayinghi.png" alt="Piper" />
   <img id="pixie" src="cupidflying.png" alt="Pixie" />
 
   <div id="textbox">
     <div id="text"></div>
     <button id="nextBtn">Next</button>
+    <button id="followBtn" onclick="window.location.href='page2.html'">Follow Pixie →</button>
   </div>
 
   <script>
     const lines = [
-      { speaker: 'Pixie', text: 'and what about these two??...' },
-      { speaker: 'Pixie', text: 'well lets just say' },
-      { speaker: 'Pixie', text: 'LOVE HAPPENED', transition: true },
-      { speaker: 'Pixie', text: "they met online, and they've built a nice relation tgthr", redirect: true }
+      { speaker: 'Pixie', text: 'uhm so ill tell u a story, its about two people, one of them is-' },
+      { speaker: 'Ethan', text: 'HII', showEthan: true },
+      { speaker: 'Pixie', text: 'oh there he is, thats ethan, hes from france, he likes maths i guess, and he lives with his family' },
+      { speaker: 'Ethan', text: 'yea...' },
+      { speaker: 'Pixie', text: 'come with me ill show u the other person' }
     ];
 
     let currentLine = 0;
     const textBox = document.getElementById('text');
     const nextBtn = document.getElementById('nextBtn');
+    const followBtn = document.getElementById('followBtn');
     const pixie = document.getElementById('pixie');
     const ethan = document.getElementById('ethan');
-    const piper = document.getElementById('piper');
 
     function typeText(text, callback) {
       let i = 0;
@@ -123,32 +109,28 @@
 
     function showLine() {
       const line = lines[currentLine];
-      const fullText = `${line.speaker}: ${line.text}`;
+      if (line.showEthan) ethan.style.display = 'block';
+      const fullText = ${line.speaker}: ${line.text};
       typeText(fullText);
 
-      if (line.transition) {
-        document.body.classList.add('love-bg');
-        pixie.src = 'nervouspixie.png';
-        ethan.src = 'blushingethan.png';
-        piper.src = 'piperblushing.png';
+      if (currentLine === 0) {
+        pixie.style.bottom = '0px';
+        pixie.style.right = '40px';
       }
 
-      if (line.redirect) {
-        nextBtn.innerText = 'Continue';
+      if (currentLine === lines.length - 1) {
+        nextBtn.style.display = 'none';
+        followBtn.style.display = 'inline-block';
       }
     }
 
     nextBtn.addEventListener('click', () => {
-      if (textBox.textContent !== `${lines[currentLine].speaker}: ${lines[currentLine].text}`) {
-        textBox.textContent = `${lines[currentLine].speaker}: ${lines[currentLine].text}`;
+      if (textBox.textContent !== ${lines[currentLine].speaker}: ${lines[currentLine].text}) {
+        textBox.textContent = ${lines[currentLine].speaker}: ${lines[currentLine].text};
         return;
       }
       currentLine++;
-      if (currentLine < lines.length) {
-        showLine();
-      } else {
-        window.location.href = 'page4.html';
-      }
+      if (currentLine < lines.length) showLine();
     });
 
     showLine();
