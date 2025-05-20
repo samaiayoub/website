@@ -13,39 +13,37 @@
       overflow: hidden;
     }
 
-    #pixie {
+    #pixie, #ethan, #piper {
       position: absolute;
+      z-index: 10;
+      transition: all 3s ease-in-out;
+    }
+
+    #pixie {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 320px;
       z-index: 100;
-      transition: all 3s ease-in-out;
     }
 
     #ethan {
-      position: absolute;
       bottom: 110px;
-      left: 0px;
-      height: 600px;
-      display: block;
-      z-index: 10;
+      left: 0;
+      height: 500px;
     }
 
     #piper {
-      position: absolute;
       bottom: 110px;
-      right: 0px;
-      height: 600px;
-      display: block;
-      z-index: 10;
+      right: 0;
+      height: 500px;
     }
 
     #textbox {
       position: fixed;
       bottom: 0;
       width: 100%;
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.85);
       padding: 20px;
       font-size: 18px;
       box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
@@ -81,6 +79,21 @@
       50% { background-color: #ffb3d9; }
       100% { background-color: #ff99cc; }
     }
+
+    .chaotic-reason {
+      position: absolute;
+      font-size: 16px;
+      color: black;
+      transform: rotate(var(--angle));
+      opacity: 0;
+      animation: showReason 0.5s forwards;
+    }
+
+    @keyframes showReason {
+      to {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
@@ -96,9 +109,24 @@
   <script>
     const lines = [
       { speaker: 'Pixie', text: 'and what about these two??...' },
-      { speaker: 'Pixie', text: 'well lets just say' },
+      { speaker: 'Pixie', text: 'well, let’s just say—' },
       { speaker: 'Pixie', text: 'LOVE HAPPENED', transition: true },
-      { speaker: 'Pixie', text: "they met online, and they've built a nice relation tgthr", redirect: true }
+      { speaker: 'Pixie', text: 'they met online, and they’ve built something beautiful together.' },
+      { speaker: 'Pixie', text: 'but as everyone, they would argue sometimes', changeImages: true },
+      { speaker: 'Pixie', text: 'and she gets mad at him for many reasons...' },
+      { speaker: 'Pixie', text: 'well yea.. theres LOTS', spawnReasons: true },
+      { speaker: 'Pixie', text: 'oh uhm i think mace is a friend of piper, ethan is not a fan of mace i think...', redirect: true }
+    ];
+
+    const reasons = [
+      'flirting with boys jokingly',
+      'not replying at 2 am.',
+      'not posting every 2 mins',
+      'being mean to mace',
+      'MACE',
+      'MACEEE',
+      'MACEEEEE!!!',
+      'MACE.'
     ];
 
     let currentLine = 0;
@@ -133,16 +161,43 @@
         piper.src = 'piperblushing.png';
       }
 
+      if (line.changeImages) {
+        ethan.src = 'nervousethan.png';
+        piper.src = 'madpiper.png';
+        pixie.src = 'nervouspixie.png';
+      }
+
+      if (line.spawnReasons) {
+        spawnReasons();
+      }
+
       if (line.redirect) {
         nextBtn.innerText = 'Continue';
       }
     }
 
+    function spawnReasons() {
+      reasons.forEach((reason, index) => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = 'chaotic-reason';
+          div.textContent = reason;
+          div.style.top = Math.random() * 90 + '%';
+          div.style.left = Math.random() * 90 + '%';
+          div.style.setProperty('--angle', `${Math.random() * 60 - 30}deg`);
+          document.body.appendChild(div);
+        }, 500 * index);
+      });
+    }
+
     nextBtn.addEventListener('click', () => {
-      if (textBox.textContent !== `${lines[currentLine].speaker}: ${lines[currentLine].text}`) {
-        textBox.textContent = `${lines[currentLine].speaker}: ${lines[currentLine].text}`;
+      const current = lines[currentLine];
+      const expected = `${current.speaker}: ${current.text}`;
+      if (textBox.textContent !== expected) {
+        textBox.textContent = expected;
         return;
       }
+
       currentLine++;
       if (currentLine < lines.length) {
         showLine();
