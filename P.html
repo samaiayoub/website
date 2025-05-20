@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hi Piper!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #ffe6f0, #e0ffe6);
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    #step1, #step2, #step3, #step4 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #step1 {
+      display: flex;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 18px;
+      background-color: #ffb6c1;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      z-index: 2;
+    }
+    button:hover {
+      background-color: #ffa6b1;
+    }
+    .cupid-container {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cupid-container img {
+      max-width: 300px;
+      margin: 0;
+      cursor: pointer;
+    }
+    .cupid-container p,
+    .cupid-container button {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="step1">
+    <h1>Hi!</h1>
+    <button onclick="showStep2()">Hi!</button>
+  </div>
+
+  <div id="step2">
+    <h2>Will you be my girlfriend?</h2>
+    <button onclick="showStep3()">Yes 💖</button>
+    <button disabled>No 😢</button>
+  </div>
+
+  <div id="step3">
+    <div class="cupid-container">
+      <p><strong>No no... I wanna show you something better.</strong></p>
+      <button onclick="showStep4()">What?</button>
+      <img src="cupid1.png" alt="Cupid">
+    </div>
+  </div>
+
+  <div id="step4">
+    <div class="cupid-container">
+      <p><strong>Come with me. Grab my hand.</strong></p>
+      <a href="page1.html">
+        <img src="cupid2.png" alt="Cupid Hand">
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function showStep2() {
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'flex';
+    }
+    function showStep3() {
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').style.display = 'flex';
+    }
+    function showStep4() {
+      document.getElementById('step3').style.display = 'none';
+      document.getElementById('step4').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
