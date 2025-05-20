@@ -30,13 +30,15 @@
     #ethan {
       bottom: 110px;
       left: 0;
-      height: 500px;
+      height: 460px;
+      z-index: 20;
     }
 
     #piper {
       bottom: 110px;
-      right: 0;
-      height: 500px;
+      right: 20px;
+      height: 460px;
+      z-index: 20;
     }
 
     #textbox {
@@ -87,6 +89,7 @@
       transform: rotate(var(--angle));
       opacity: 0;
       animation: showReason 0.5s forwards;
+      z-index: 5;
     }
 
     @keyframes showReason {
@@ -168,7 +171,7 @@
       }
 
       if (line.spawnReasons) {
-        spawnReasons();
+        spawnReasonsRepeated();
       }
 
       if (line.redirect) {
@@ -176,9 +179,11 @@
       }
     }
 
-    function spawnReasons() {
-      reasons.forEach((reason, index) => {
+    function spawnReasonsRepeated() {
+      const total = 80; // fill screen densely
+      for (let i = 0; i < total; i++) {
         setTimeout(() => {
+          const reason = reasons[i % reasons.length];
           const div = document.createElement('div');
           div.className = 'chaotic-reason';
           div.textContent = reason;
@@ -186,8 +191,8 @@
           div.style.left = Math.random() * 90 + '%';
           div.style.setProperty('--angle', `${Math.random() * 60 - 30}deg`);
           document.body.appendChild(div);
-        }, 500 * index);
-      });
+        }, 500 * i);
+      }
     }
 
     nextBtn.addEventListener('click', () => {
