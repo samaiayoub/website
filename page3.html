@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page 3 - Cupid Speaks</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive;
+    }
+    .background {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      z-index: -2;
+      transition: background 2s ease;
+    }
+    .love-bg {
+      animation: loveColor 5s infinite alternate;
+    }
+    @keyframes loveColor {
+      0% { background-color: #ffcce6; }
+      50% { background-color: #ffb3d9; }
+      100% { background-color: #ff99cc; }
+    }
+    .character {
+      position: absolute;
+      bottom: 0;
+      max-height: 40vh;
+    }
+    #ethan {
+      left: 0;
+    }
+    #piper {
+      right: 0;
+    }
+    #cupid {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 35vh;
+    }
+    .textbox {
+      position: absolute;
+      bottom: 10vh;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border: 3px solid pink;
+      border-radius: 20px;
+      padding: 20px 30px;
+      width: 60vw;
+      font-size: 1.5em;
+      text-align: center;
+      z-index: 10;
+    }
+    .next-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: pink;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="background" id="bg"></div>
+  <img id="ethan" class="character" src="ethansayinghi.png" />
+  <img id="piper" class="character" src="pipersayinghi.png" />
+  <img id="cupid" src="cupidflying.png" />
+  <div class="textbox" id="textbox">
+    <div id="text">And what about these two??...</div>
+    <button class="next-btn" onclick="nextLine()">Next</button>
+  </div>
+
+  <script>
+    const lines = [
+      "And what about these two??...",
+      "Well let's just say...",
+      "LOVE HAPPENED.",
+      "They met online, and they've built a nice relation tgthr."
+    ];
+
+    let index = 0;
+    const textElement = document.getElementById("text");
+    const bg = document.getElementById("bg");
+
+    function nextLine() {
+      index++;
+      if (index < lines.length) {
+        textElement.innerText = lines[index];
+
+        if (index === 2) {
+          bg.classList.add("love-bg");
+          document.getElementById("cupid").src = "nervoupixie.png";
+          document.getElementById("ethan").src = "blushingethan.png";
+          document.getElementById("piper").src = "blushingpiper.png";
+        }
+      } else {
+        window.location.href = "page4.html";
+      }
+    }
+  </script>
+</body>
+</html>
