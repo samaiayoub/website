@@ -109,6 +109,10 @@
 
     #loveMessage {
       display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       font-size: 60px;
       font-weight: bold;
       color: #ff1493;
@@ -142,5 +146,57 @@
   <div id="loveMessage">YAYY U SAID YES, I LOVE YOU SO MUCH!</div>
 
   <script>
-    const textLines = [
-      { text: "Pixie: but he would still love her and text her everyday, no matter what", bg: "texting.png", pixie: "cupidf
+    const text = document.getElementById("text");
+    const nextBtn = document.getElementById("nextBtn");
+    const textbox = document.getElementById("textbox");
+    const pixie = document.getElementById("pixie");
+    const finalScreen = document.getElementById("finalScreen");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const loveMessage = document.getElementById("loveMessage");
+
+    const dialog = [
+      { text: "Pixie: but he would still love her and text her everyday, no matter what", bg: "texting.png", pixie: "cupidflying.png" },
+      { text: "Pixie: they would laugh and text eachother", bg: "text.png", pixie: "cupidflying.png" },
+      { text: "Pixie: she would be mad ofc", bg: "madtext.png", pixie: "cupidflying.png" },
+      { text: "Pixie: but there's a problem", bg: "madtext.png", pixie: "judgingpixie.png" },
+      { text: "Pixie: he wants Piper to be his gf, so it's up to YOU now", bg: "white", pixie: "judgingpixie.png" }
+    ];
+
+    let index = 0;
+
+    function showNextLine() {
+      if (index < dialog.length) {
+        const line = dialog[index];
+        text.innerText = line.text;
+        document.body.style.background = line.bg === "white" ? "white" : `url('${line.bg}') center center / cover no-repeat`;
+        pixie.src = line.pixie;
+        index++;
+
+        if (index === dialog.length) {
+          nextBtn.innerText = "Continue";
+        }
+      } else {
+        textbox.style.display = "none";
+        pixie.style.display = "none";
+        finalScreen.style.display = "flex";
+      }
+    }
+
+    nextBtn.addEventListener("click", showNextLine);
+
+    yesBtn.addEventListener("click", () => {
+      finalScreen.style.display = "none";
+      loveMessage.style.display = "block";
+    });
+
+    noBtn.addEventListener("mouseover", () => {
+      noBtn.style.position = "absolute";
+      noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+      noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+    });
+
+    showNextLine();
+  </script>
+</body>
+</html>
